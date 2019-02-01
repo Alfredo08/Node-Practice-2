@@ -7,12 +7,7 @@ const {ListaFrutas} = require('./../models/frutasModel');
 let jsonParser = bodyParser.json();
 
 router.get('/lista-frutas', jsonParser, (req, res) => {
-	var promise = new Promise(function(resolve, reject) {
-		ListaFrutas.obtener(resolve, reject)
-	})
-	.then(lista => {
-		res.json(lista);
-	});
+	res.json(ListaFrutas.obtener());
 });
 
 router.post('/lista-frutas', jsonParser, (req, res) => {
@@ -27,15 +22,17 @@ router.post('/lista-frutas', jsonParser, (req, res) => {
 		}
 	}
 
-	var promise = new Promise(function(resolve, reject) {
+	let promise = new Promise(function(resolve, reject){
 		ListaFrutas.crear(resolve, reject, {
-							id : req.body.id,
-							nombre: req.body.nombre,
-							date : req.body.date
-						});
+								id : req.body.id,
+								nombre: req.body.nombre
+							});
 	})
-	.then(lista => {
-		res.json(lista);
+	.then( resultado => {
+		res.status(201).json(resultado);
+	}).
+	catch (err => {
+		return res.status(400).send(`Occurió algo inesperado ${err}`);
 	})
 });
 

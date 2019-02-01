@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-// this is our schema to represent a restaurant
-const fruitSchema = mongoose.Schema({
-  nombre: {type: String, required: true},
-  id: {type: Number, required: true},
-  date : {type: Date}
+const dbFrutas = mongoose.Schema({
+	nombre : {type : String, required : true},
+	id : {type : Number, required : true}
 });
 
-const Fruit = mongoose.model('Fruit', fruitSchema);
+const Frutas = mongoose.model("Frutas", dbFrutas);
 
 let inventarioFrutas = [
 					{
@@ -23,25 +21,20 @@ let inventarioFrutas = [
 
 
 const ListaFrutas = {
-	obtener : function(resolve, reject){
-		Fruit.find()
-			.then(result => {
-				resolve(result);
-			})
-			.catch(err => {
-				reject(err);
-			})
+	obtener : function(){
+		return inventarioFrutas
 	},
 	crear : function(resolve, reject, nuevaFruta){
-		Fruit.create(nuevaFruta)
-			.then(result => {
-				resolve(result);
+		Frutas.create(nuevaFruta)
+			.then( resultado => {
+				resolve(resultado);
 			})
 			.catch(err => {
 				reject(err);
 			})
 	}
 }
+
 
 module.exports = {
 	ListaFrutas : ListaFrutas

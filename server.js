@@ -1,11 +1,9 @@
 const express = require('express');
 const {router : frutasRouter} = require('./routes/frutasRouter');
-
-const { PORT, DATABASE_URL } = require("./config");
+const {PORT, DATABASE_URL} = require('./config');
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-
 
 let app = express();
 
@@ -57,5 +55,9 @@ if (require.main === module) {
 }
 
 module.exports = { app, runServer, closeServer };
+
+
+
+
 
 
